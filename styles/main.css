@@ -1,0 +1,31 @@
+section#navbar{
+    background-color: var(--navbar-bg);
+    color: var(--navbar-primary);
+    position: absolute;
+    top:0;
+    left:0;
+    right:0;
+    padding:0.5em;
+}
+
+.text-container{
+    background-color: var(--textbox);
+    border-radius: 0.3em;
+    width: fit-content;
+    padding: 0.2em;
+}
+.text-container>input{
+    background-color: var(--textbox);
+    color: var(--navbar-primary);
+    border: none;
+    border-bottom: 1px solid transparent;
+    outline: none;
+}
+.text-container>input:focus{
+    border-bottom: 1px solid var(--navbar-primary);
+}
+
+body{
+    background-color: var(--editor-bg);
+    color: var(--editor-primary);
+}
