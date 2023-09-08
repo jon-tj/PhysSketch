@@ -1,6 +1,6 @@
 const canvas = document.querySelector('canvas')
 const ctx = canvas.getContext('2d')
-
+const world=[] // Contains all the physics objects to be simulated
 
 class Viewport{
     constructor(x=0, y=0, width=10, height=null){
@@ -23,7 +23,7 @@ const viewport= new Viewport()
 function render(){
     ctx.fillStyle = colors['--editor-bg']
     ctx.fillRect(0, 0, canvas.width, canvas.height)
-    
+
 }
 
 //#region set the canvas size

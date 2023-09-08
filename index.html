@@ -11,7 +11,7 @@
 <body>
     <section id="navbar">
         <div class="text-container">
-            <input type="text" id="title" value="New sketch" spellcheck="false">
+            <input type="text" id="title" placeholder="New sketch" spellcheck="false">
         </div>
         <button id="play" onclick="togglePlay()">
         <img src="./art/icons/play.png" alt="play" title="Play simulation">
@@ -22,26 +22,29 @@
         <canvas></canvas>
         <aside id="toolbox">
             <section id="tools">
-                <button onclick="toggleToolbox()">
-                    <img src="./art/icons/burger.png" alt="expand menu" title="Expand menu">
+                <button onclick="toggleToolbox()" title="Expand menu">
+                    <img src="./art/icons/burger.png" alt="expand menu">
                 </button>
-                <button onclick="setTool('rect')">
-                    <img src="./art/icons/rect.png" alt="rectangle" title="Rectangle tool">
+                <button onclick="setTool('rect')" title="Rectangle tool">
+                    <img src="./art/icons/rect.png" alt="rectangle">
                 </button>
-                <button onclick="setTool('text')">
-                    <img src="./art/icons/text.png" alt="text" title="Text tool">
+                <button onclick="setTool('text')" title="Text tool">
+                    <img src="./art/icons/text.png" alt="text">
                 </button>
-                <button onclick="setTool('ruler')">
-                    <img src="./art/icons/ruler.png" alt="ruler" title="Ruler">
+                <button onclick="setTool('ruler')" title="Ruler">
+                    <img src="./art/icons/ruler.png" alt="ruler">
                 </button>
-                <button onclick="setTool('compass')">
-                    <img src="./art/icons/compass.png" alt="compass" title="Compass">
+                <button onclick="setTool('compass')" title="Compass">
+                    <img src="./art/icons/compass.png" alt="compass">
                 </button>
-                <button onclick="setTool('zoom')">
-                    <img src="./art/icons/zoom.png" alt="zoom" title="Zoom">
+                <button onclick="setTool('zoom')" title="Zoom">
+                    <img src="./art/icons/zoom.png" alt="zoom">
                 </button>
-                <button onclick="setTool('grid')">
-                    <img src="./art/icons/grid.png" alt="grid" title="Toggle grid">
+                <button onclick="toggleGrid()" title="Toggle grid">
+                    <img src="./art/icons/grid.png" alt="grid">
+                </button>
+                <button onclick="toggleFloor()" title="Toggle floor">
+                    <img src="./art/icons/floor.png" alt="floor">
                 </button>
             </section>
             <section id="settings">

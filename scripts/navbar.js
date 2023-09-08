@@ -22,7 +22,9 @@ navbar.title.addEventListener("keydown",()=>{
     setTimeout(() => {
         // keydown is called earlier than keyup, but before 
         // the value is updated, so we need to wait a frame.
-        document.title="PhysSketch | "+navbar.title.value
+        var title=navbar.title.value
+        if(title.length==0) title="New sketch"
+        document.title="PhysSketch | "+title
     }, 1);
 })
 

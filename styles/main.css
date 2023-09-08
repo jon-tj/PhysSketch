@@ -62,6 +62,7 @@ aside#toolbox{
 section#tools{
     position: absolute;
     right:0;top:0.1em; /*Offset for rounded edges*/
+    bottom:0.1em;
     transform: translate(calc(100% + 4px), 0);
 }
 #tools>button{
@@ -70,7 +71,10 @@ section#tools{
     background-color: var(--navbar-bg);
 }
 #tools>button:first-child{
-    margin-bottom: 1.3em;
+    margin-bottom: 1.5em;
+}
+#tools>button:last-child{
+    margin-top: 1.5em;
 }
 #settings>h3{
     border-bottom: 1px solid var(--navbar-secondary);
