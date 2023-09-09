@@ -7,6 +7,7 @@
     <title>PhysSketch | New sketch</title>
     <link rel="stylesheet" href="./styles/main.css">
     <link id="theme" rel="stylesheet" href="./styles/themes/blueprint.css">
+    <link rel="icon" href="./art/logo.png">
 </head>
 <body>
     <section id="navbar">
@@ -17,9 +18,18 @@
         <img src="./art/icons/play.png" alt="play" title="Play simulation">
         </button>
 
+        <img src="./art/logo.png" class="logo" alt="PhysSketch">
     </section>
     <section id="editor">
         <canvas></canvas>
+        <aside id="hierarchy">
+            <section id="hierachy-controls">
+
+            </section>
+            <ul id="world-list">
+
+            </ul>
+        </aside>
         <aside id="toolbox">
             <section id="tools">
                 <button onclick="toggleToolbox()" title="Expand menu">
@@ -43,20 +53,24 @@
                 <button onclick="toggleGrid()" title="Toggle grid">
                     <img src="./art/icons/grid.png" alt="grid">
                 </button>
-                <button onclick="toggleFloor()" title="Toggle floor">
-                    <img src="./art/icons/floor.png" alt="floor">
+                <button onclick="toggleSystemOpen(this)" title="System bounds">
+                    <img src="./art/icons/system_floor.png" alt="floor">
                 </button>
             </section>
             <section id="settings">
                 <h3>Toolbox</h3>
-                <ul>
+                <ul id="objects-list">
                     <li>Force field</li>
+                    <li>Particle</li>
                     <li>Piston</li>
                     <li>Softbody</li>
+                    <li>Rigidbody</li>
                     <li>Switch</li>
-                    <li>Cable</li>
+                    <li>Rope</li> <!--Mark as conductive for cable-->
                     <li>Lamp</li>
                     <li>Magnet</li>
+                    <li>Board</li>
+                    <li>Nail</li>
                 </ul>
             </section>
         </aside>
@@ -66,8 +80,10 @@
 <script src="./scripts/utils.js"></script>
 
 <!-- Functionality -->
-<script src="./scripts/navbar.js"></script>
+<script src="./scripts/editor/navbar.js"></script>
 <script src="./scripts/colors.js"></script>
 <script src="./scripts/render.js" onload="render()"></script>
+<script src="./scripts/editor/editor.js"></script>
+<script src="./scripts/phys/physics-primitives.js"></script>
 <script src="./scripts/phys/environment.js"></script>
 </html>

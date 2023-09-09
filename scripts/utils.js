@@ -12,10 +12,19 @@ class Vector{
     static cross(u,v){
         return u.x*v.y-u.y*v.x
     }
+    static project(u,v){
+        return v.scaled(Vector.dot(u,v)/v.magnitudeSqr)
+    }
+    static diff(u,v){
+        return new Vector(u.x-v.x, u.y-v.y)
+    }
     normal(){
-        return new Vector(-this.y,this.x)
+        return new Vector(-this.y,this.x).normalize()
     }
-    magnitude(){
-        return Math.sqrt(this.x*this.x+this.y*this.y)
-    }
+    get magnitude(){ return Math.sqrt(this.magnitudeSqr) }
+    get magnitudeSqr(){ return this.x*this.x+this.y*this.y }
+    get normalized(){ return this.scaled(1/this.magnitude) }
+    normalize(){ return this.scale(1/this.magnitude) }
+    scaled(s){ return new Vector(this.x*s,this.y*s) }
+    scale(s){ this.x*s;this.y*s;return this }
 }
