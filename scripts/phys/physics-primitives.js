@@ -42,59 +42,7 @@ class Collider{
     //#endregion
 }
 
-class PhysicsObject{
-    constructor(x,y,collider=null){
-        this.location = new Vector(x,y)
-        this.velocity = new Vector()
-        this.collider = collider
-        this.conductive = false
-        this.temperature = 293 // 20'C
-        this.drag = 0.03
-        this.rotation = 0
-        this.bounce=0.5
-        this.mass=1
-        this.density=1
-    }
-
-    render(view){
-        // Is called by the render function. Each class that extends
-        // PhysicsObject should override this method to render correctly. 
-    }
-
-    step(env,world,dt){
-        // Represents a simulation step. Basic forces are modeled by the base class.
-        this.location.x += dt*this.velocity.x
-        this.location.y += dt*this.velocity.y
-        this.velocity.x -= this.drag*dt*this.velocity.x*this.velocity.x*Math.sign(this.velocity.x)
-        this.velocity.y -= this.drag*dt*this.velocity.y*this.velocity.y*Math.sign(this.velocity.y)
-        this.velocity.y -= env.g*dt
-        if(env.closed){
-            if(this.location.y<viewport.bottom){
-                this.location.y=Math.max(this.location.y,viewport.bottom)
-                this.velocity.y*=-this.bounce
-            }
-            if(this.location.y>viewport.top){
-                this.location.y=Math.min(this.location.y,viewport.top)
-            }
-            if(this.location.x<viewport.left){
-                this.location.x=Math.min(this.location.x,viewport.left)
-                this.velocity.x*=-this.bounce
-            }
-            if(this.location.x>viewport.right){
-                this.location.x=Math.min(this.location.x,viewport.right)
-                this.velocity.x*=-this.bounce
-            }
-        }else{
-            if(this.location.y<viewport.bottom && env.floor){
-                this.location.y=Math.max(this.location.y,viewport.bottom)
-                this.velocity.y*=-this.bounce
-            }
-        }
-        for(var i=0;i<world.length;i++)
-            if(world[i]!=this) this.collider.Check(world[i].collider)
-    }
-}
-class Rigidbody extends PhysicsObject{
+class Rigidbody extends VerletObject{
     constructor(x=0,y=0,polygon=null){
         if(polygon==null){
             polygon=[
@@ -114,7 +62,7 @@ class Rigidbody extends PhysicsObject{
         super.step(env,world,dt)
     }
 }
-class Softbody extends PhysicsObject {
+class Softbody extends VerletObject {
     // Can be modeled with springs connecting all the convex shapes, that is:
     // For each vertice of the polygon, every other vertice that can be hit by raycasting
     // without leaving the polygon should be connected with a spring.
@@ -122,26 +70,22 @@ class Softbody extends PhysicsObject {
     // that are anchored close together/are almost parallel.
 }
 
-class Particle extends PhysicsObject{
-    constructor(x=0,y=0,radius=0.2,density=0.3,bounce=0.2){
-        super(x,y)
-        this.collider =Collider.Circle(this,radius)
+class Particle extends VerletObject{
+    constructor(x=0,y=0,radius=0.1,density=5/*[g/ml]*/){
+        super(x,y,density*(Math.PI*radius*radius))
+        //this.collider =Collider.Circle(this,radius)
         this.radius=radius
         this.color="white"
-        this.mass=density*(Math.PI*radius*radius)
         this.density=density
     }
     render(view){
-        var xT=view.transformX(this.location.x)
-        var yT=view.transformY(this.location.y)
+        var xT=view.transformX(this.currPos.x)
+        var yT=view.transformY(this.currPos.y)
         
         ctx.beginPath();
         ctx.arc(xT, yT, this.radius*view.dy, 0, Math.PI * 2);
         ctx.closePath();
         ctx.fillStyle = this.color;
         ctx.fill();
-    }
-    step(env,world,dt){
-        super.step(env,world,dt)
     }
 }

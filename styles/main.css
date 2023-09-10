@@ -80,7 +80,7 @@ section#tools{
 #settings>h3{
     border-bottom: 1px solid var(--navbar-secondary);
 }
-#settings>ul{
+ul{
     padding-left: 0;
     list-style-type: none;
 }

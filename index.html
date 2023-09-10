@@ -58,38 +58,51 @@
                 </button>
             </section>
             <section id="settings">
-                <h3>Toolbox</h3>
+                <h3 id="settings-title">Toolbox</h3>
                 <button onclick="toggleSettingsPane(false)" title="Hide menu">
                     <img src="./art/icons/cross.png" alt="hide menu">
                 </button>
-                <ul id="objects-list">
-                    <li>Force field</li>
-                    <li>Particle</li>
-                    <li>Piston</li>
-                    <li>Softbody</li>
-                    <li>Rigidbody</li>
-                    <li>Switch</li>
-                    <li>Rope</li> <!--Mark as conductive for cable-->
-                    <li>Lamp</li>
-                    <li>Magnet</li>
-                    <li>Board</li>
-                    <li>Nail</li>
-                </ul>
+                <section name="create">
+                    <ul id="objects-list">
+                        <li>Force field</li>
+                        <li>Particle</li>
+                        <li>Piston</li>
+                        <li>Softbody</li>
+                        <li>Rigidbody</li>
+                        <li>Switch</li>
+                        <li>Rope</li> <!--Mark as conductive for cable-->
+                        <li>Lamp</li>
+                        <li>Magnet</li>
+                        <li>Board</li>
+                        <li>Nail</li>
+                    </ul>
+                </section>
+                <section name="gizmos">
+                    <ul id="gizmos-list">
+                        <li>Text</li>
+                        <li>Ruler</li>
+                        <li>Compass</li>
+                    </ul>
+                </section>
             </section>
         </aside>
     </section>
 </body>
 <!-- Helpers -->
 <script src="./scripts/utils.js"></script>
+<script src="./scripts/colors.js"></script>
 
 <!-- Functionality -->
 <script src="./scripts/editor/navbar.js"></script>
-<script src="./scripts/colors.js"></script>
 <script src="./scripts/gizmos/grid.js"></script>
+<script src="./scripts/gizmos/text.js"></script>
 <script src="./scripts/render.js" onload="render()"></script>
+
 <script src="./scripts/editor/editor.js"></script>
+<script src="./scripts/editor/shortcut-keys.js"></script>
+
+<script src="./scripts/phys/verlet-object.js"></script>
+<script src="./scripts/phys/solver.js"></script>
 <script src="./scripts/phys/physics-primitives.js"></script>
 <script src="./scripts/phys/environment.js"></script>
-<script src="./scripts/editor/shortcut-keys.js"></script>
-<script src="./scripts/gizmos/text.js"></script>
 </html>

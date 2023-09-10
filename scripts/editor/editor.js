@@ -31,6 +31,8 @@ window.addEventListener('wheel',(e)=>{
     render()
 })
 canvas.addEventListener('mousedown',(e)=>{
+    setMouseAttributes(e)
+    if(mouse.button!=1) return
     switch(tool.type){
         case 'create':
             switch(tool.item){
@@ -47,14 +49,3 @@ canvas.addEventListener('mousedown',(e)=>{
     }
     render()
 })
-
-var dt = 0.01 // increase loop interval for more stable simulation
-// Set up main simulation loop
-setInterval(()=>{
-    if(simulation.playing){
-        for(var i=0; i<world.length; i++){
-            world[i].step(environment,world,dt)
-        }
-        render()
-    }
-},dt*1000) 

@@ -18,6 +18,14 @@ class Vector{
     static diff(u,v){
         return new Vector(u.x-v.x, u.y-v.y)
     }
+    static sum(u,v){
+        return new Vector(u.x+v.x, u.y+v.y)
+    }
+    static get zero(){
+        return new Vector(0,0)
+    } 
+    static down(magnitude){ return new Vector(0,-magnitude) }
+    reset(){this.x=0;this.y=0}
     normal(){
         return new Vector(-this.y,this.x).normalize()
     }
@@ -26,5 +34,5 @@ class Vector{
     get normalized(){ return this.scaled(1/this.magnitude) }
     normalize(){ return this.scale(1/this.magnitude) }
     scaled(s){ return new Vector(this.x*s,this.y*s) }
-    scale(s){ this.x*s;this.y*s;return this }
+    scale(s){ this.x*=s;this.y*=s;return this }
 }
