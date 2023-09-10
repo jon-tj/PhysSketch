@@ -18,10 +18,10 @@ function setMouseAttributes(e){
     mouse.worldLocation.x = viewport.revertX(e.x)
     mouse.worldLocation.y = viewport.revertY(e.y)
 }
-
+canvas.oncontextmenu = (e)=> {e.preventDefault()}
 canvas.addEventListener('mousemove',(e)=>{
     setMouseAttributes(e)
-    if(mouse.button==1){
+    if(mouse.button==2){
         viewport.pan(mouse.offset.x/viewport.dx,mouse.offset.y/viewport.dy)
         render()
     }
