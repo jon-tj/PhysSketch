@@ -2,7 +2,7 @@ class VerletObject{
     /*
         Represents the basic Physics particle primitve.
     */
-    constructor(x,y,mass){
+    constructor(x,y,mass,kinematic=false){
         this.mass = mass/*[kg]*/
         // We store both current and previous positions to *deduce* velocity.
         // This has the bonus of being able to constrain the particle without
@@ -10,9 +10,11 @@ class VerletObject{
         this.currPos = new Vector(x,y)/*[m]*/
         this.prevPos = new Vector(x,y)/*[m]*/
         this.acc = new Vector()/*[m/s^2]*/
+        this.kinematic = kinematic
     }
     
     step(dt/*[s]*/){
+        if(this.kinematic) return
         var velocity = Vector.diff(this.currPos,this.prevPos)
         this.prevPos = this.currPos
         this.currPos = Vector.sum(

@@ -1,4 +1,7 @@
 
+// If youre looking for list of objects in simulation,
+// refer to 'world' in [render.js] ;)
+
 var dt = 0.01/*[s]*/ // increase loop interval for more stable simulation
 
 // Set up main simulation loop
@@ -8,6 +11,10 @@ setInterval(()=>{
 
         
         for(var s=0; s<simulation.verletSubsteps; s++){
+            // Apply forces from force fields
+            for(var i=0; i<world.length; i++)
+                forces.forEach((f)=>f.apply(world[i]))
+
             // Integration step: all physics objects step using Velvet integration.
             for(var i=0; i<world.length; i++){
                 world[i].step(sim_dt)

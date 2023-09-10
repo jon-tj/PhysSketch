@@ -40,11 +40,16 @@ canvas.addEventListener('mousedown',(e)=>{
                     var p=new Particle(mouse.worldLocation.x,mouse.worldLocation.y)
                     world.push(p)
                     break
+                case 'Force field':
+                    var f=new ForceField(mouse.worldLocation.x,mouse.worldLocation.y)
+                    staticObjects.push(f)
+                    forces.push(f)
+                    break
             }
             break
         case 'text':
             var t=new TextGizmo(mouse.worldLocation.x,mouse.worldLocation.y,"Text")
-            gizmos.push(t)
+            staticObjects.push(t)
             break
     }
     render()

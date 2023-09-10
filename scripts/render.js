@@ -1,7 +1,8 @@
 const canvas = document.querySelector('canvas')
 const ctx = canvas.getContext('2d')
-const world=[] // Contains all the physics objects to be simulated
-const gizmos=[] // Contains text objects, rulers and such
+const world=[] // Contains objects that are affected by forces
+const staticObjects=[] // Contains text objects, rulers, etc...
+const forces=[] // Contains force fields
 var displayGrid=true
 
 class Viewport{
@@ -55,8 +56,8 @@ function render(){
     for(var i=0; i<world.length; i++){
         world[i].render(viewport)
     }
-    for(var i=0; i<gizmos.length; i++)
-        gizmos[i].render(viewport)
+    for(var i=0; i<staticObjects.length; i++)
+        staticObjects[i].render(viewport)
 }
 
 //#region set the canvas size

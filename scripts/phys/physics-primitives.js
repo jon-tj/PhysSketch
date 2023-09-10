@@ -89,3 +89,48 @@ class Particle extends VerletObject{
         ctx.fill();
     }
 }
+
+class ForceField{
+    constructor(x,y,radius=3,forceSpace=Space.centripetal){
+        this.location = new Vector(x,y)
+        this.radius = radius
+        this.forceSpace = forceSpace
+        this.axis = new Vector(10,0)
+        this.color = '#f22'
+    }
+    apply(particle){
+        var dir = Vector.diff(this.location,particle.currPos)
+        // May need to adjust the tiny value here to achieve stability (since 2d /= 3d)
+        var multiplier = 1/(1e-2 + particle.mass*dir.magnitudeSqr)
+        switch(this.forceSpace){
+            case Space.global:
+                particle.accelerate(this.axis.scaled(multiplier))
+                break
+            case Space.local:
+                particle.accelerate(this.axis.scaled(multiplier))
+                break
+            case Space.centripetal:
+                particle.accelerateXY(
+                    dir.x*multiplier*this.axis.x,
+                    dir.y*multiplier*this.axis.y
+                )
+                break
+        }
+    }
+    render(view){
+        var xT=view.transformX(this.location.x)
+        var yT=view.transformY(this.location.y)
+        var radius=this.radius*view.dx
+        ctx.beginPath();
+        ctx.arc(xT, yT, radius, 0, 2 * Math.PI);
+        ctx.closePath();
+        ctx.strokeStyle = this.color;
+        ctx.stroke()
+        
+        ctx.beginPath();
+        ctx.arc(xT, yT, 5, 0, 2 * Math.PI);
+        ctx.closePath();
+        ctx.fillStyle = this.color;
+        ctx.fill()
+    }
+}

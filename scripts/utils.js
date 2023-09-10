@@ -36,3 +36,9 @@ class Vector{
     scaled(s){ return new Vector(this.x*s,this.y*s) }
     scale(s){ this.x*=s;this.y*=s;return this }
 }
+
+const Space = {
+    local:'local',
+    global:'global',
+    centripetal:'centripetal',
+}
