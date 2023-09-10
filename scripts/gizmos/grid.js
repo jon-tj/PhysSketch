@@ -17,6 +17,8 @@ function renderGrid(view){
     ctx.stroke()
 }
 
+// If we dont display the numbers on the grid, we might as well use powers of two instead of "clean" numbers,
+// because we then would get smooth transitions between zoom levels.
 const gridIntevals=[2,5,10]
 function Gridify(min,max,wantedAmount=10){
     var optimalSpacing=(max-min)/wantedAmount

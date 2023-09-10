@@ -26,6 +26,10 @@ canvas.addEventListener('mousemove',(e)=>{
         render()
     }
 })
+window.addEventListener('wheel',(e)=>{
+    viewport.zoom(e.deltaY)
+    render()
+})
 canvas.addEventListener('mousedown',(e)=>{
     switch(tool.type){
         case 'create':

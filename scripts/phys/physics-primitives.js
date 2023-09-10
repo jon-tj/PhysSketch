@@ -49,7 +49,7 @@ class PhysicsObject{
         this.collider = collider
         this.conductive = false
         this.temperature = 293 // 20'C
-        this.drag = 0.3
+        this.drag = 0.03
         this.rotation = 0
         this.bounce=0.5
         this.mass=1
@@ -65,8 +65,8 @@ class PhysicsObject{
         // Represents a simulation step. Basic forces are modeled by the base class.
         this.location.x += dt*this.velocity.x
         this.location.y += dt*this.velocity.y
-        this.velocity.x -= this.drag*dt*this.velocity.x*this.velocity.x
-        this.velocity.y -= this.drag*dt*this.velocity.y*this.velocity.y
+        this.velocity.x -= this.drag*dt*this.velocity.x*this.velocity.x*Math.sign(this.velocity.x)
+        this.velocity.y -= this.drag*dt*this.velocity.y*this.velocity.y*Math.sign(this.velocity.y)
         this.velocity.y -= env.g*dt
         if(env.closed){
             if(this.location.y<viewport.bottom){

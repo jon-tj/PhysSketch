@@ -36,6 +36,12 @@ class Viewport{
         this.x-=dx
         this.y+=dy
     }
+    zoom(d){
+        var factor=1.1
+        if(d<0) factor=1/factor
+        this.width*=factor
+        this.height*=factor
+    }
 }
 const viewport= new Viewport()
 
