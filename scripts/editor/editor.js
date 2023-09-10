@@ -3,11 +3,6 @@ const tool = {
     item: null,
 }
 
-function setTool(type,item=null) {
-    tool.type = type
-    if(item) tool.item = item
-}
-
 const mouse = {
     location:{x:0,y:0},
     worldLocation:{x:0,y:0},
@@ -26,18 +21,26 @@ function setMouseAttributes(e){
 
 canvas.addEventListener('mousemove',(e)=>{
     setMouseAttributes(e)
-
+    if(mouse.button==4){
+        console.log("a")
+    }
 })
 canvas.addEventListener('mousedown',(e)=>{
-    if(tool.type=='create'){
-        switch(tool.item){
-            case 'Particle':
-                var p=new Particle(mouse.worldLocation.x,mouse.worldLocation.y)
-                world.push(p)
-                break
-        }
-        render()
+    switch(tool.type){
+        case 'create':
+            switch(tool.item){
+                case 'Particle':
+                    var p=new Particle(mouse.worldLocation.x,mouse.worldLocation.y)
+                    world.push(p)
+                    break
+            }
+            break
+        case 'text':
+            var t=new TextGizmo(mouse.worldLocation.x,mouse.worldLocation.y,"Text")
+            gizmos.push(t)
+            break
     }
+    render()
 })
 
 var dt = 0.01 // increase loop interval for more stable simulation

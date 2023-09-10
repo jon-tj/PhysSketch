@@ -39,17 +39,26 @@ navbar.title.addEventListener("keydown",()=>{
     }, 1);
 })
 
-function toggleToolbox(){
-    if(toolbox.container.style.left =="0px")
-        toolbox.container.style.left=-toolbox.container.clientWidth+'px'
-    else
-        toolbox.container.style.left='0px'
+function setTool(type,item=null) {
+    tool.type = type
+    if(item) tool.item = item
+    toggleSettingsPane(true)
+}
+
+function toggleSettingsPane(display=null){
+    if(toolbox.container.style.left =="0px"){
+        if(display==false || display==null)
+            toolbox.container.style.left=-toolbox.container.clientWidth+'px'
+    }
+    else{
+        if(display==true || display==null)
+            toolbox.container.style.left='0px'
+    }
 }
 
 function toggleSystemOpen(sender){
     var img=sender.children[0]
     var i=img.src.split('system_')[1]
-    console.log(i)
     switch(i){
         case 'floor.png':
             environment.floor = false
@@ -65,4 +74,8 @@ function toggleSystemOpen(sender){
             img.src='./art/icons/system_floor.png'
             break;
     }
+}
+function toggleGrid(){
+    displayGrid = !displayGrid
+    render()
 }

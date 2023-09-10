@@ -1,6 +1,8 @@
 const canvas = document.querySelector('canvas')
 const ctx = canvas.getContext('2d')
 const world=[] // Contains all the physics objects to be simulated
+const gizmos=[] // Contains text objects, rulers and such
+var displayGrid=true
 
 class Viewport{
     constructor(x=0, y=0, width=10, height=null){
@@ -42,9 +44,13 @@ function render(){
     ctx.fillStyle = colors['--editor-bg']
     ctx.fillRect(0, 0, canvas.width, canvas.height)
 
+    if(displayGrid) renderGrid(viewport)
+
     for(var i=0; i<world.length; i++){
         world[i].render(viewport)
     }
+    for(var i=0; i<gizmos.length; i++)
+        gizmos[i].render(viewport)
 }
 
 //#region set the canvas size

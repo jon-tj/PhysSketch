@@ -32,8 +32,8 @@
         </aside>
         <aside id="toolbox">
             <section id="tools">
-                <button onclick="toggleToolbox()" title="Expand menu">
-                    <img src="./art/icons/burger.png" alt="expand menu">
+                <button onclick="setTool('create')" title="Expand menu">
+                    <img src="./art/icons/draw.png" alt="expand menu">
                 </button>
                 <button onclick="setTool('rect')" title="Rectangle tool">
                     <img src="./art/icons/rect.png" alt="rectangle">
@@ -59,6 +59,9 @@
             </section>
             <section id="settings">
                 <h3>Toolbox</h3>
+                <button onclick="toggleSettingsPane(false)" title="Hide menu">
+                    <img src="./art/icons/cross.png" alt="hide menu">
+                </button>
                 <ul id="objects-list">
                     <li>Force field</li>
                     <li>Particle</li>
@@ -82,8 +85,11 @@
 <!-- Functionality -->
 <script src="./scripts/editor/navbar.js"></script>
 <script src="./scripts/colors.js"></script>
+<script src="./scripts/gizmos/grid.js"></script>
 <script src="./scripts/render.js" onload="render()"></script>
 <script src="./scripts/editor/editor.js"></script>
 <script src="./scripts/phys/physics-primitives.js"></script>
 <script src="./scripts/phys/environment.js"></script>
+<script src="./scripts/editor/shortcut-keys.js"></script>
+<script src="./scripts/gizmos/text.js"></script>
 </html>

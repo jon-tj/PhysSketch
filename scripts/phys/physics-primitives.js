@@ -12,7 +12,9 @@ class Collider{
         // Uses this.check(collider,distance) to determine if we are colliding.
         var d=Vector.diff(collider.parent.location,this.parent.location)
         var distance=d.magnitude
-        d=d.scale(1/(distance*30))
+        d.scale(1/(distance*30))
+        d.x/=distance*30
+        d.y/=distance*30
         var collides=this.check(collider,distance)
         this.colliders.length=0
         if(collides && step){
