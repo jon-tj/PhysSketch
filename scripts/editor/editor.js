@@ -21,8 +21,9 @@ function setMouseAttributes(e){
 
 canvas.addEventListener('mousemove',(e)=>{
     setMouseAttributes(e)
-    if(mouse.button==4){
-        console.log("a")
+    if(mouse.button==1){
+        viewport.pan(mouse.offset.x/viewport.dx,mouse.offset.y/viewport.dy)
+        render()
     }
 })
 canvas.addEventListener('mousedown',(e)=>{

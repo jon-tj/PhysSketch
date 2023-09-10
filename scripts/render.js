@@ -33,7 +33,7 @@ class Viewport{
     get right(){return this.x+this.width}
 
     pan(dx,dy){
-        this.x+=dx
+        this.x-=dx
         this.y+=dy
     }
 }

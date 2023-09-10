@@ -1,21 +1,18 @@
 function renderGrid(view){
-    var xT0 = view.transformX(view.left)
-    var xT1 = view.transformX(view.right)
-    var yT0 = view.transformY(view.top)
-    var yT1 = view.transformY(view.bottom)
-    var gridX = Gridify(xT0,xT1,11*canvas.width/canvas.height)
-    var gridY = Gridify(yT0,yT1,11)
+    var gridX = Gridify(view.left,view.right,11*canvas.width/canvas.height)
+    var gridY = Gridify(view.bottom,view.top,11)
 
     ctx.beginPath()
-    gridX.forEach((xT)=>{
+    gridX.forEach((x)=>{
+        var xT=view.transformX(x)
         ctx.moveTo(xT,0)
         ctx.lineTo(xT,canvas.height)
     })
-    gridY.forEach((yT)=>{
+    gridY.forEach((y)=>{
+        var yT=view.transformY(y)
         ctx.moveTo(0,yT)
         ctx.lineTo(canvas.width,yT)
     })
-    console.log(yT0,yT1)
     ctx.strokeStyle= colors['--editor-accent']
     ctx.stroke()
 }
