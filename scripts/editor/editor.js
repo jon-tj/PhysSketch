@@ -1,6 +1,7 @@
 const tool = {
     type: null,
     item: null,
+    tempObj:null
 }
 
 const mouse = {
@@ -45,11 +46,29 @@ canvas.addEventListener('mousedown',(e)=>{
                     staticObjects.push(f)
                     forces.push(f)
                     break
+                case 'Link':
+                    var a=new Particle(mouse.worldLocation.x,mouse.worldLocation.y)
+                    world.push(a)
+                    tool.tempObj=a
+                    break
             }
             break
         case 'text':
             var t=new TextGizmo(mouse.worldLocation.x,mouse.worldLocation.y,"Text")
             staticObjects.push(t)
+            break
+    }
+    render()
+})
+canvas.addEventListener('mouseup',(e)=>{
+    if(mouse.button!=1)return
+    if(tool.type!='create') return
+    switch(tool.item){
+        case 'Link':
+            var b=new Particle(mouse.worldLocation.x,mouse.worldLocation.y)
+            var link=new Link(tool.tempObj,b,Vector.diff(tool.tempObj.currPos,b.currPos).magnitude)
+            world.push(b)
+            staticObjects.push(link)
             break
     }
     render()

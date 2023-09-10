@@ -42,34 +42,6 @@ class Collider{
     //#endregion
 }
 
-class Rigidbody extends VerletObject{
-    constructor(x=0,y=0,polygon=null){
-        if(polygon==null){
-            polygon=[
-                {x:-1,y:-1},
-                {x:1,y:-1},
-                {x:1,y:1},
-                {x:-1,y:1},
-            ]
-        }
-        const collider =new Collider(this,(c,d)=>{
-            //..?
-        },true); // Set to convex for debugging purposes
-        super(x,y,collider)
-        this.polygon = polygon
-    }
-    step(env,world,dt){
-        super.step(env,world,dt)
-    }
-}
-class Softbody extends VerletObject {
-    // Can be modeled with springs connecting all the convex shapes, that is:
-    // For each vertice of the polygon, every other vertice that can be hit by raycasting
-    // without leaving the polygon should be connected with a spring.
-    // For computational efficiency, we put weights on the spring and remove springs
-    // that are anchored close together/are almost parallel.
-}
-
 class Particle extends VerletObject{
     constructor(x=0,y=0,radius=0.1,density=5/*[g/ml]*/){
         super(x,y,density*(Math.PI*radius*radius))
@@ -134,4 +106,47 @@ class ForceField{
         ctx.fillStyle = this.color;
         ctx.fill()
     }
+}
+
+class Link{
+    /*
+        Represents an axis between two particles that can be rigid or springy.
+        To make the link rigid, set spring=0.
+    */
+    constructor(a,b,length,rigidity=0.5){
+        this.a=a
+        this.b=b
+        this.length=length
+        this.rigidity=rigidity
+        this.color = '#f22'
+    }
+    apply(){
+        var axis=Vector.diff(this.a.currPos,this.b.currPos)
+        var dist=axis.magnitude
+        axis.scale(this.rigidity*(this.length-dist)/(2*dist))
+        this.a.currPos=Vector.sum(this.a.currPos,axis)
+        this.b.currPos=Vector.diff(this.b.currPos,axis)
+        this.a.prevPos=Vector.sum(this.a.prevPos,axis)
+        this.b.prevPos=Vector.diff(this.b.prevPos,axis)
+    }
+    render(view){
+        if(simulation.playing)
+            this.apply() // Hack that lets us group the link along with static objects
+        ctx.beginPath()
+        ctx.moveTo(view.transformX(this.a.currPos.x),view.transformY(this.a.currPos.y))
+        ctx.lineTo(view.transformX(this.b.currPos.x),view.transformY(this.b.currPos.y))
+        ctx.strokeStyle=this.color
+        ctx.stroke()
+    }
+
+}
+
+class Softbody extends VerletObject{
+    /*
+        Can be modeled with springs connecting all the convex shapes, that is:
+        For each vertice of the polygon, every other vertice that can be hit by raycasting
+        without leaving the polygon should be connected with a spring.
+        For computational efficiency, we put weights on the spring and remove springs
+        that are anchored close together/are almost parallel.
+    */
 }
