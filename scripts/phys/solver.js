@@ -11,9 +11,6 @@ setInterval(()=>{
 
         
         for(var s=0; s<simulation.verletSubsteps; s++){
-            // Apply forces from force fields
-            for(var i=0; i<world.length; i++)
-                forces.forEach((f)=>f.apply(world[i]))
 
             // Integration step: all physics objects step using Velvet integration.
             for(var i=0; i<world.length; i++){
@@ -22,6 +19,10 @@ setInterval(()=>{
                 if(simulation.enableDrag) world[i].drag()
             }
 
+            // Apply forces from force fields
+            for(var i=0; i<world.length; i++)
+                forces.forEach((f)=>f.apply(world[i]))
+                
             // Check for collisions
             for(var i=0; i<world.length; i++){
                 for(var j=i+1; j<world.length; j++){

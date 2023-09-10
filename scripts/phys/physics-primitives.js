@@ -95,13 +95,13 @@ class ForceField{
         this.location = new Vector(x,y)
         this.radius = radius
         this.forceSpace = forceSpace
-        this.axis = new Vector(10,0)
+        this.axis = new Vector(5,0)
         this.color = '#f22'
     }
     apply(particle){
         var dir = Vector.diff(this.location,particle.currPos)
         // May need to adjust the tiny value here to achieve stability (since 2d /= 3d)
-        var multiplier = 1/(1e-2 + particle.mass*dir.magnitudeSqr)
+        var multiplier = 1/(1e-1 + particle.mass*dir.magnitudeSqr)
         switch(this.forceSpace){
             case Space.global:
                 particle.accelerate(this.axis.scaled(multiplier))
@@ -110,9 +110,10 @@ class ForceField{
                 particle.accelerate(this.axis.scaled(multiplier))
                 break
             case Space.centripetal:
+                dir.scale(multiplier)
                 particle.accelerateXY(
-                    dir.x*multiplier*this.axis.x,
-                    dir.y*multiplier*this.axis.y
+                    dir.x*this.axis.x-dir.y*this.axis.y,
+                    dir.y*this.axis.x+dir.x*this.axis.y
                 )
                 break
         }

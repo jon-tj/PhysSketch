@@ -89,6 +89,8 @@
         <section id="env-settings">
             <label for="enableDrag">Drag</label>
             <input type="checkbox" id="enableDrag" onchange="environment.enableDrag=this.checked">
+            <label for="enableGravity">Gravity</label>
+            <input type="checkbox" id="enableGravity" onchange="environment.g=environment.g==0?9.81:0" checked>
         </section>
     </section>
 </body>
