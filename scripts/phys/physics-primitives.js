@@ -113,25 +113,29 @@ class Link{
         Represents an axis between two particles that can be rigid or springy.
         To make the link rigid, set spring=0.
     */
-    constructor(a,b,length,rigidity=0.5){
+    constructor(a,b,length,rigidity=1 ){
         this.a=a
         this.b=b
         this.length=length
         this.rigidity=rigidity
         this.color = '#f22'
+        this.hidden=false
+    }
+    hide(){
+        this.hidden=true
+        return this
     }
     apply(){
         var axis=Vector.diff(this.a.currPos,this.b.currPos)
         var dist=axis.magnitude
-        axis.scale(this.rigidity*(this.length-dist)/(2*dist))
-        this.a.currPos=Vector.sum(this.a.currPos,axis)
-        this.b.currPos=Vector.diff(this.b.currPos,axis)
-        this.a.prevPos=Vector.sum(this.a.prevPos,axis)
-        this.b.prevPos=Vector.diff(this.b.prevPos,axis)
+        var halves = this.a.kinematic || this.b.kinematic? 1:0.5
+        axis.scale(this.rigidity*halves*(this.length-dist)/(dist))
+        if(!this.a.kinematic)
+            this.a.currPos=Vector.sum(this.a.currPos,axis)
+        if(!this.b.kinematic)
+            this.b.currPos=Vector.diff(this.b.currPos,axis)
     }
     render(view){
-        if(simulation.playing)
-            this.apply() // Hack that lets us group the link along with static objects
         ctx.beginPath()
         ctx.moveTo(view.transformX(this.a.currPos.x),view.transformY(this.a.currPos.y))
         ctx.lineTo(view.transformX(this.b.currPos.x),view.transformY(this.b.currPos.y))

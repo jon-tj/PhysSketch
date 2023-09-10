@@ -3,7 +3,9 @@ const ctx = canvas.getContext('2d')
 const world=[] // Contains objects that are affected by forces
 const staticObjects=[] // Contains text objects, rulers, etc...
 const forces=[] // Contains force fields
+const links=[]
 var displayGrid=true
+var tool={} //suppress error on initial render
 
 class Viewport{
     constructor(x=0, y=0, width=10, height=null){
@@ -57,7 +59,15 @@ function render(){
         world[i].render(viewport)
     }
     for(var i=0; i<staticObjects.length; i++)
-        staticObjects[i].render(viewport)
+        if(!staticObjects[i].hidden)staticObjects[i].render(viewport)
+    
+    if(tool.tempObj!=null){
+        ctx.beginPath()
+        ctx.moveTo(viewport.transformX(tool.tempObj.currPos.x), viewport.transformY(tool.tempObj.currPos.y))
+        ctx.lineTo(mouse.location.x,mouse.location.y)
+        ctx.strokeStyle="#f22"
+        ctx.stroke()
+    }
 }
 
 //#region set the canvas size

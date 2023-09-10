@@ -1,4 +1,4 @@
-const tool = {
+var tool = {
     type: null,
     item: null,
     tempObj:null
@@ -26,6 +26,25 @@ canvas.addEventListener('mousemove',(e)=>{
         viewport.pan(mouse.offset.x/viewport.dx,mouse.offset.y/viewport.dy)
         render()
     }
+    if(tool.tempObj!=null){
+        switch(tool.item){
+            case 'Rope':
+                var createNodeDist=0.25
+                var dir = Vector.diff(mouse.worldLocation,tool.tempObj.currPos)
+                var dist=dir.magnitude
+                if(dist<createNodeDist)return
+                dir.normalize()
+                var b=new Particle(tool.tempObj.currPos.x+dir.x*createNodeDist,tool.tempObj.currPos.y+dir.y*createNodeDist)
+                var link=new Link(tool.tempObj,b,createNodeDist) //Vector.diff(tool.tempObj.currPos,b.currPos).magnitude
+                //link.hide()
+                world.push(b)
+                staticObjects.push(link)
+                links.push(link)
+                tool.tempObj=b
+                break
+        }
+        render()
+    }
 })
 window.addEventListener('wheel',(e)=>{
     viewport.zoom(e.deltaY)
@@ -47,7 +66,9 @@ canvas.addEventListener('mousedown',(e)=>{
                     forces.push(f)
                     break
                 case 'Link':
+                case 'Rope':
                     var a=new Particle(mouse.worldLocation.x,mouse.worldLocation.y)
+                    if(tool.item=='Rope') a.kinematic=true
                     world.push(a)
                     tool.tempObj=a
                     break
@@ -67,9 +88,12 @@ canvas.addEventListener('mouseup',(e)=>{
         case 'Link':
             var b=new Particle(mouse.worldLocation.x,mouse.worldLocation.y)
             var link=new Link(tool.tempObj,b,Vector.diff(tool.tempObj.currPos,b.currPos).magnitude)
+            if(tool.item=='Rope') link.hide()
             world.push(b)
             staticObjects.push(link)
+            links.push(link)
             break
     }
+    tool.tempObj=null
     render()
 })

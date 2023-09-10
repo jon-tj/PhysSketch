@@ -11,5 +11,5 @@ const environment={
 const simulation={
     playing:false,
     enableDrag:false,
-    verletSubsteps:4
+    verletSubsteps:7
 }

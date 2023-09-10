@@ -19,9 +19,12 @@ setInterval(()=>{
                 if(simulation.enableDrag) world[i].drag()
             }
 
-            // Apply forces from force fields
+            // Apply forces from force fields ...
             for(var i=0; i<world.length; i++)
                 forces.forEach((f)=>f.apply(world[i]))
+            // ... and links
+            for(var i=0; i<links.length; i++)
+                links[i].apply()
                 
             // Check for collisions
             for(var i=0; i<world.length; i++){
