@@ -61,16 +61,15 @@ function toggleSystemOpen(sender){
     var i=img.src.split('system_')[1]
     switch(i){
         case 'floor.png':
-            environment.floor = false
+            environment.systemClosure = systemClosure.open
             img.src='./art/icons/system_open.png'
             break;
         case 'open.png':
-            environment.closed=true
+            environment.systemClosure = systemClosure.closed
             img.src='./art/icons/system_closed.png'
             break;
         case 'closed.png':
-            environment.closed=false
-            environment.floor = true
+            environment.systemClosure = systemClosure.floor
             img.src='./art/icons/system_floor.png'
             break;
     }

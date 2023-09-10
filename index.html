@@ -86,6 +86,10 @@
                 </section>
             </section>
         </aside>
+        <section id="env-settings">
+            <label for="enableDrag">Drag</label>
+            <input type="checkbox" id="enableDrag" onchange="environment.enableDrag=this.checked">
+        </section>
     </section>
 </body>
 <!-- Helpers -->
@@ -101,8 +105,8 @@
 <script src="./scripts/editor/editor.js"></script>
 <script src="./scripts/editor/shortcut-keys.js"></script>
 
-<script src="./scripts/phys/verlet-object.js"></script>
-<script src="./scripts/phys/solver.js"></script>
-<script src="./scripts/phys/physics-primitives.js"></script>
 <script src="./scripts/phys/environment.js"></script>
+<script src="./scripts/phys/solver.js"></script>
+<script src="./scripts/phys/verlet-object.js"></script>
+<script src="./scripts/phys/physics-primitives.js"></script>
 </html>

@@ -1,12 +1,15 @@
-const simulation={
-    playing:false,
-}
-const systemClosure={
+/*enum*/ const systemClosure={
     closed:'closed',
     floor:'floor',
     open:'open',
 }
-var environment={ // environment is kept variable to make fast switching easier
+const environment={
     g:9.81,
     systemClosure:systemClosure.floor
+}
+
+const simulation={
+    playing:false,
+    enableDrag:false,
+    verletSubsteps:4
 }
