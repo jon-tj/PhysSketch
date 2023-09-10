@@ -36,7 +36,7 @@ canvas.addEventListener('mousemove',(e)=>{
                 dir.normalize()
                 var b=new Particle(tool.tempObj.currPos.x+dir.x*createNodeDist,tool.tempObj.currPos.y+dir.y*createNodeDist)
                 var link=new Link(tool.tempObj,b,createNodeDist) //Vector.diff(tool.tempObj.currPos,b.currPos).magnitude
-                //link.hide()
+                link.hide()
                 world.push(b)
                 staticObjects.push(link)
                 links.push(link)
