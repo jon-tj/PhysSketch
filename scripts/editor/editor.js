@@ -36,30 +36,27 @@ canvas.addEventListener('mousemove',(e)=>{
     switch(tool.type){
         case 'create':
             if(tool.tempObj!=null){
-            switch(tool.item){
-                case 'Rope':
-                    var createNodeDist=tool.createRadius*2*1.1
-                    var dir = Vector.diff(mouse.worldLocation,tool.tempObj.currPos)
-                    var dist=dir.magnitude
-                    if(dist<createNodeDist)return
-                    dir.normalize()
-                    var b=new Particle(tool.tempObj.currPos.x+dir.x*createNodeDist,tool.tempObj.currPos.y+dir.y*createNodeDist,tool.createRadius)
-                    var link=new Link(tool.tempObj,b,createNodeDist) //Vector.diff(tool.tempObj.currPos,b.currPos).magnitude
-                    //link.hide()
-                    world.push(b)
-                    links.push(link)
-                    tool.tempObj=b
-                    break
-            }
+                switch(tool.item){
+                    case 'Rope':
+                        var createNodeDist=tool.createRadius*2*1.1
+                        var dir = Vector.diff(mouse.worldLocation,tool.tempObj.currPos)
+                        var dist=dir.magnitude
+                        if(dist<createNodeDist)return
+                        dir.normalize()
+                        var b=new Particle(tool.tempObj.currPos.x+dir.x*createNodeDist,tool.tempObj.currPos.y+dir.y*createNodeDist,tool.createRadius)
+                        var link=new Link(tool.tempObj,b,createNodeDist) //Vector.diff(tool.tempObj.currPos,b.currPos).magnitude
+                        //link.hide()
+                        world.push(b)
+                        links.push(link)
+                        tool.tempObj=b
+                        break
+                }
             }
             break
         case 'cut':
-            if(mouse.button==1)
-            editorCut()
+            if(mouse.button==1) editorCut()
             break
-            
     }
-    
 
     // Find hoverObj
     tool.hoverObj=null
@@ -81,6 +78,18 @@ canvas.addEventListener('mousemove',(e)=>{
     findClosestObject(staticObjects,'static')
     findClosestObject(world,'world')
     findClosestObject(forces,'forces')
+    for(var i=0;i<world.length;i++){
+        if(world[i].powerInlet==null)continue
+        var pT=world[i].powerInlet.rotated(world[i].angle)
+        var dx = viewport.transformX(world[i].currPos.x+pT.x)-mouse.location.x
+        var dy = viewport.transformY(world[i].currPos.y+pT.y)-mouse.location.y
+        var dist = Math.sqrt(dx * dx + dy * dy)
+        if(dist<=minDist){
+            minDist=dist
+            tool.hoverObjType='action'
+            tool.hoverObj=world[i]
+        }
+    }
 
     render()
 })
@@ -157,7 +166,9 @@ canvas.addEventListener('mousedown',(e)=>{
             break
         case 'grab':
             if(tool.hoverObj!=null && tool.hoverObj.currPos){
-                tool.tempObj=tool.hoverObj
+                if(tool.hoverObjType=="action")
+                    tool.hoverObj.activate()
+                else tool.tempObj=tool.hoverObj
             }
             break
     }

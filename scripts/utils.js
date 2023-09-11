@@ -35,6 +35,10 @@ class Vector{
     normalize(){ return this.scale(1/this.magnitude) }
     scaled(s){ return new Vector(this.x*s,this.y*s) }
     scale(s){ this.x*=s;this.y*=s;return this }
+    rotated(a){
+        var c=Math.cos(a), s=Math.sin(a)
+        return new Vector(this.x*c+this.y*s,this.y*c-this.x*s)
+    }
 }
 
 const Space = {

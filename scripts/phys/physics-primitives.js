@@ -168,7 +168,7 @@ class Piston extends VerletObject {
         this.extendedState=0 //goes from 0 to 1
         this.extended=false
         this.angle=Math.PI/4
-        this.powerInlet={} // "virtual particle"
+        this.powerInlet=new Vector(0,-0.3) // "virtual particle"
     }
     render(view){
         var xT=view.transformX(this.currPos.x)
@@ -178,26 +178,33 @@ class Piston extends VerletObject {
         axis:renderBox(view,xT,yT,0,(0.3+this.extendedState*0.3)*this.size,this.size*0.2,this.size*this.extendedState*0.6,this.angle,this.color)
         face:renderBox(view,xT,yT,0,(0.35+this.extendedState*0.6)*this.size,this.size,this.size*0.1,this.angle,this.color,true)
         
+        // center
         ctx.beginPath();
-        var circleRadius=tool.hoverObj==this?7:5
+        var circleRadius=tool.hoverObj==this&&tool.hoverObjType!="action"?7:5
         ctx.arc(xT, yT, circleRadius, 0, 2 * Math.PI);
         ctx.closePath();
         ctx.fillStyle = this.color;
         ctx.fill()
         
+        // power inlet
         ctx.save();
         ctx.translate(xT, yT);
         ctx.rotate(this.angle);
-        ctx.translate(0, 0.3*this.size*view.dy);
+        this.powerInlet.y=-this.powerInlet.y
+        var pT=this.powerInlet.scaled(this.size*view.dy)
+        this.powerInlet.y=-this.powerInlet.y
+        ctx.translate(pT.x, pT.y);
         ctx.beginPath();
-        var circleRadius=tool.hoverObj==this.powerInlet?7:5
+        var circleRadius=tool.hoverObj==this&&tool.hoverObjType=="action"?7:5
         ctx.arc(0, 0, circleRadius, 0, 2 * Math.PI);
         ctx.closePath();
         ctx.strokeStyle = "#ff2";
         ctx.stroke()
         ctx.restore()
     }
-
+    activate(){
+        this.extended=!this.extended
+    }
     step(dt){
         super.step(dt)
         if(this.extended){
