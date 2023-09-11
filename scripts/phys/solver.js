@@ -74,10 +74,17 @@ setInterval(()=>{
         render()
     }else{
         if(tool.type=="grab" && tool.tempObj!=null){
+            if(tool.tempObj.start){
+                var offset=Vector.diff(mouse.worldLocation,tool.tempObj.currPos)
+                tool.tempObj.start=Vector.sum(offset,tool.tempObj.start)
+                tool.tempObj.end=Vector.sum(offset,tool.tempObj.end)
+            }
             tool.tempObj.currPos.x=mouse.worldLocation.x
             tool.tempObj.currPos.y=mouse.worldLocation.y
-            tool.tempObj.prevPos.x=mouse.worldLocation.x
-            tool.tempObj.prevPos.y=mouse.worldLocation.y
+            if(tool.tempObj.prevPos){
+                tool.tempObj.prevPos.x=mouse.worldLocation.x
+                tool.tempObj.prevPos.y=mouse.worldLocation.y
+            }
             render()
         }
     }

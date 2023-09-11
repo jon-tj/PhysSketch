@@ -50,6 +50,11 @@ canvas.addEventListener('mousemove',(e)=>{
                         links.push(link)
                         tool.tempObj=b
                         break
+                    case 'Ruler':
+                        tool.tempObj.end.x=mouse.worldLocation.x
+                        tool.tempObj.end.y=mouse.worldLocation.y
+                        tool.tempObj.currPos=Vector.sum(tool.tempObj.start,tool.tempObj.end).scale(0.5)
+                        break
                 }
             }
             break
@@ -158,6 +163,11 @@ canvas.addEventListener('mousedown',(e)=>{
             case 'Text':
                 var t=new TextGizmo(mouse.worldLocation.x,mouse.worldLocation.y,"Text")
                 staticObjects.push(t)
+                break
+            case 'Ruler':
+                var t=new RulerGizmo(mouse.worldLocation.x,mouse.worldLocation.y)
+                staticObjects.push(t)
+                tool.tempObj=t
                 break
             }
             break

@@ -1,5 +1,7 @@
 const canvas = document.querySelector('canvas')
 const ctx = canvas.getContext('2d')
+const defaultFont="11pt Arial"
+
 const world=[] // Contains objects that are affected by forces
 const staticObjects=[] // Contains text objects, rulers, etc...
 const forces=[] // Contains force fields
@@ -101,7 +103,7 @@ function render(){
     for(var i=0; i<links.length; i++)
         if(!links[i].hidden)links[i].render(viewport)
 
-    if(tool.tempObj!=null && mouse.location.x>0){
+    if(tool.tempObj!=null && mouse.location.x>0 && tool.tempObj.currPos){
         ctx.beginPath()
         ctx.moveTo(viewport.transformX(tool.tempObj.currPos.x), viewport.transformY(tool.tempObj.currPos.y))
         ctx.lineTo(mouse.location.x,mouse.location.y)
