@@ -65,6 +65,27 @@ function renderVector(vec,x,y,color="#f22"){
     renderArrow(x,y,x+vec.x,y+vec.y,color)
 }
 
+function renderBox(view, xT, yT,dX,dY, width, height, angle=0, color="#f22", fill=false) {
+    var size = view.dy;
+    ctx.beginPath();
+    ctx.save();
+    ctx.translate(xT, yT);
+    ctx.rotate(angle);
+    ctx.translate(dX*size, -dY*size);
+
+    var halfWidth = width * 0.5;
+    var halfHeight = height * 0.5;
+
+    if (fill) {
+        ctx.fillStyle = color;
+        ctx.fillRect(-halfWidth * size, -halfHeight * size, width * size, height * size);
+    } else {
+        ctx.strokeStyle = color;
+        ctx.strokeRect(-halfWidth * size, -halfHeight * size, width * size, height * size);
+    }
+    ctx.restore();
+}
+
 function render(){
     ctx.fillStyle = colors['--editor-bg']
     ctx.fillRect(0, 0, canvas.width, canvas.height)
@@ -77,7 +98,10 @@ function render(){
     for(var i=0; i<staticObjects.length; i++)
         if(!staticObjects[i].hidden)staticObjects[i].render(viewport)
     
-    if(tool.tempObj!=null){
+    for(var i=0; i<links.length; i++)
+        if(!links[i].hidden)links[i].render(viewport)
+
+    if(tool.tempObj!=null && mouse.location.x>0){
         ctx.beginPath()
         ctx.moveTo(viewport.transformX(tool.tempObj.currPos.x), viewport.transformY(tool.tempObj.currPos.y))
         ctx.lineTo(mouse.location.x,mouse.location.y)

@@ -38,8 +38,8 @@
                 <button onclick="setTool('cut')" title="Cut">
                     <img src="./art/icons/cut.png" alt="cut">
                 </button>
-                <button onclick="setTool('select')" title="Select">
-                    <img src="./art/icons/select.png" alt="rectangle">
+                <button onclick="setTool('grab')" title="Grab">
+                    <img src="./art/icons/select.png" alt="grab">
                 </button>
                 <button onclick="toggleGrid()" title="Toggle grid">
                     <img src="./art/icons/grid.png" alt="grid">
@@ -60,9 +60,9 @@
                         <li>Link</li>
                         <li>Rope</li> <!--Mark as conductive for cable-->
                         <li>Anchor</li>
+                        <li>Piston</li>
                         
                         <!--<li>Pole</li>-->
-                        <li>Piston</li>
                         <li>Softbody</li>
                         <li>Rigidbody</li>
                         <li>Switch</li>
@@ -84,7 +84,7 @@
         </aside>
         <section id="env-settings">
             <label for="enableDrag">Drag</label>
-            <input type="checkbox" id="enableDrag" onchange="environment.enableDrag=this.checked">
+            <input type="checkbox" id="enableDrag" onchange="simulation.enableDrag=this.checked">
             <label for="enableGravity">Gravity</label>
             <input type="checkbox" id="enableGravity" onchange="environment.g=environment.g==0?9.81:0" checked>
         </section>

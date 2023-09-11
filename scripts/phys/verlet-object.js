@@ -38,16 +38,16 @@ class VerletObject{
         this.acc.y+=a.y
     }
 
-    /* Some densities (listed in g/ml):
-        Water: ~ 1 g/ml
-        Air: 0.001293 g/ml
+    /* Some densities (listed in kg/m^3):
+        Water: ~ 1000 kg/m^3
+        Air: 1.293 kg/m^3
     */
-    drag(fluid_density=0.001293/*[g/ml]*/){
+    drag(fluid_density=1.293/*[kg/m^3]*/){
         var velocity = Vector.diff(this.currPos,this.prevPos)
-        this.accelerate(velocity.scale(-fluid_density*velocity.magnitude))
+        this.accelerate(velocity.scale(-500*fluid_density*velocity.magnitude/this.mass))
     }
 
-    buoyancy(fluid_density=0.001293/*[g/ml]*/){
+    buoyancy(fluid_density=1.29/*[kg/m^3]*/){
         var velocity = Vector.diff(this.currPos,this.prevPos)
         this.accelerate(velocity.scale(-fluid_density*velocity.magnitude))
     }

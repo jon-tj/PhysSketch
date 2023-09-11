@@ -160,6 +160,57 @@ class Link{
 
 }
 
+class Piston extends VerletObject {
+    constructor(x,y,mass,size,color="#ddd"){
+        super(x,y,mass,true)
+        this.size=size
+        this.color=color
+        this.extendedState=0 //goes from 0 to 1
+        this.extended=false
+        this.angle=Math.PI/4
+        this.powerInlet={} // "virtual particle"
+    }
+    render(view){
+        var xT=view.transformX(this.currPos.x)
+        var yT=view.transformY(this.currPos.y)
+
+        body:renderBox(view,xT,yT,0,0,this.size,this.size*0.6,this.angle,this.color)
+        axis:renderBox(view,xT,yT,0,(0.3+this.extendedState*0.3)*this.size,this.size*0.2,this.size*this.extendedState*0.6,this.angle,this.color)
+        face:renderBox(view,xT,yT,0,(0.35+this.extendedState*0.6)*this.size,this.size,this.size*0.1,this.angle,this.color,true)
+        
+        ctx.beginPath();
+        var circleRadius=tool.hoverObj==this?7:5
+        ctx.arc(xT, yT, circleRadius, 0, 2 * Math.PI);
+        ctx.closePath();
+        ctx.fillStyle = this.color;
+        ctx.fill()
+        
+        ctx.save();
+        ctx.translate(xT, yT);
+        ctx.rotate(this.angle);
+        ctx.translate(0, 0.3*this.size*view.dy);
+        ctx.beginPath();
+        var circleRadius=tool.hoverObj==this.powerInlet?7:5
+        ctx.arc(0, 0, circleRadius, 0, 2 * Math.PI);
+        ctx.closePath();
+        ctx.strokeStyle = "#ff2";
+        ctx.stroke()
+        ctx.restore()
+    }
+
+    step(dt){
+        super.step(dt)
+        if(this.extended){
+            this.extendedState+=dt*20
+            this.extendedState=Math.min(this.extendedState,1)
+        }else{
+            this.extendedState-=dt*20
+            this.extendedState=Math.max(this.extendedState,0)
+        }
+    }
+    extend
+}
+
 class Softbody extends VerletObject{
     /*
         Can be modeled with springs connecting all the convex shapes, that is:
