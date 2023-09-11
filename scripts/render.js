@@ -68,6 +68,15 @@ function render(){
         ctx.strokeStyle="#f22"
         ctx.stroke()
     }
+    if(tool.type=="create"){
+        ctx.globalAlpha=0.5
+        ctx.beginPath()
+        ctx.arc(mouse.location.x,mouse.location.y,tool.createRadius*viewport.dy,0,2*Math.PI)
+        ctx.closePath()
+        ctx.strokeStyle="#f22"
+        ctx.stroke()
+        ctx.globalAlpha=1
+    }
 }
 
 //#region set the canvas size

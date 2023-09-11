@@ -10,7 +10,7 @@ class Collider{
     Check(collider,step=true){
         // Should be called for each collider in the same world chunk.
         // Uses this.check(collider,distance) to determine if we are colliding.
-        var d=Vector.diff(collider.parent.location,this.parent.location)
+        var d=Vector.diff(collider.parent.currPos,this.parent.currPos)
         var distance=d.magnitude
         d.scale(1/(distance*30))
         d.x/=distance*30
@@ -19,10 +19,10 @@ class Collider{
         this.colliders.length=0
         if(collides && step){
             if(this.convex){
-                collider.parent.location.x+=d.x
-                collider.parent.location.y+=d.y
-                this.parent.location.x-=d.x
-                this.parent.location.y-=d.y
+                collider.parent.currPos.x+=d.x
+                collider.parent.currPos.y+=d.y
+                this.parent.currPos.x-=d.x
+                this.parent.currPos.y-=d.y
                 this.colliders.push(collider)
             }
         }
@@ -53,9 +53,13 @@ class Particle extends VerletObject{
     render(view){
         var xT=view.transformX(this.currPos.x)
         var yT=view.transformY(this.currPos.y)
+
+        var renderRadius=this.radius*view.dy
+        if(tool.hoverObj==this)
+            renderRadius+=2
         
         ctx.beginPath();
-        ctx.arc(xT, yT, this.radius*view.dy, 0, Math.PI * 2);
+        ctx.arc(xT, yT, renderRadius, 0, Math.PI * 2);
         ctx.closePath();
         ctx.fillStyle = this.color;
         ctx.fill();
@@ -64,14 +68,14 @@ class Particle extends VerletObject{
 
 class ForceField{
     constructor(x,y,radius=3,forceSpace=Space.centripetal){
-        this.location = new Vector(x,y)
+        this.currPos = new Vector(x,y)
         this.radius = radius
         this.forceSpace = forceSpace
         this.axis = new Vector(5,0)
         this.color = '#f22'
     }
     apply(particle){
-        var dir = Vector.diff(this.location,particle.currPos)
+        var dir = Vector.diff(this.currPos,particle.currPos)
         // May need to adjust the tiny value here to achieve stability (since 2d /= 3d)
         var multiplier = 1/(1e-1 + particle.mass*dir.magnitudeSqr)
         switch(this.forceSpace){
@@ -91,8 +95,8 @@ class ForceField{
         }
     }
     render(view){
-        var xT=view.transformX(this.location.x)
-        var yT=view.transformY(this.location.y)
+        var xT=view.transformX(this.currPos.x)
+        var yT=view.transformY(this.currPos.y)
         var radius=this.radius*view.dx
         ctx.beginPath();
         ctx.arc(xT, yT, radius, 0, 2 * Math.PI);
@@ -101,7 +105,8 @@ class ForceField{
         ctx.stroke()
         
         ctx.beginPath();
-        ctx.arc(xT, yT, 5, 0, 2 * Math.PI);
+        var circleRadius=tool.hoverObj==this?7:5
+        ctx.arc(xT, yT, circleRadius, 0, 2 * Math.PI);
         ctx.closePath();
         ctx.fillStyle = this.color;
         ctx.fill()
