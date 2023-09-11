@@ -68,6 +68,7 @@ section#tools{
     right:0;top:0.3em; /*Offset for rounded edges*/
     bottom:0.1em;
     transform: translate(calc(100% + 4px), 0);
+    height:fit-content;
 }
 #tools>button{
     margin-bottom: 0.4em;
@@ -77,8 +78,9 @@ section#tools{
 #tools>button:last-child{
     margin-top: 2em;
 }
-#settings>h3{
+.underline{
     border-bottom: 1px solid var(--navbar-secondary);
+    margin-bottom: 0;
 }
 ul{
     padding-left: 0;

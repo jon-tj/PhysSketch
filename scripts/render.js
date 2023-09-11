@@ -48,6 +48,22 @@ class Viewport{
 }
 const viewport= new Viewport()
 
+function renderArrow(x1,y1,x2,y2,color="#f22"){
+    ctx.beginPath()
+    ctx.strokeStyle=color
+    ctx.moveTo(x1,y1)
+    ctx.lineTo(x2,y2)
+    var dir=new Vector(x2-x1,y2-y1).normalize()
+    var norm=dir.normal()
+    var arrowSize=15
+    ctx.lineTo(x2-(dir.x+norm.x)*arrowSize,y2-(dir.y+norm.y)*arrowSize)
+    ctx.moveTo(x2,y2)
+    ctx.lineTo(x2-(dir.x-norm.x)*arrowSize,y2-(dir.y-norm.y)*arrowSize)
+    ctx.stroke()
+}
+function renderVector(vec,x,y,color="#f22"){
+    renderArrow(x,y,x+vec.x,y+vec.y,color)
+}
 
 function render(){
     ctx.fillStyle = colors['--editor-bg']

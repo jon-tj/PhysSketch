@@ -42,7 +42,7 @@ navbar.title.addEventListener("keydown",()=>{
 function setTool(type,item=null) {
     tool.type = type
     if(item) tool.item = item
-    toggleSettingsPane(true)
+    if(type=="create") toggleSettingsPane(true)
 }
 
 function toggleSettingsPane(display=null){

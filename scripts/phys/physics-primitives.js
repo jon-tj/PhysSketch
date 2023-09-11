@@ -79,10 +79,7 @@ class ForceField{
         // May need to adjust the tiny value here to achieve stability (since 2d /= 3d)
         var multiplier = 1/(1e-1 + particle.mass*dir.magnitudeSqr)
         switch(this.forceSpace){
-            case Space.global:
-                particle.accelerate(this.axis.scaled(multiplier))
-                break
-            case Space.local:
+            default:
                 particle.accelerate(this.axis.scaled(multiplier))
                 break
             case Space.centripetal:
@@ -110,6 +107,16 @@ class ForceField{
         ctx.closePath();
         ctx.fillStyle = this.color;
         ctx.fill()
+
+        switch(this.forceSpace){
+            default:
+                renderVector(this.axis.scaled(0.3*view.dy),xT,yT,this.color)
+                break
+            case Space.centripetal:
+                renderVector(this.axis.scaled(0.3*view.dy),xT,yT,this.color)
+                break
+        }
+
     }
 }
 
@@ -146,6 +153,9 @@ class Link{
         ctx.lineTo(view.transformX(this.b.currPos.x),view.transformY(this.b.currPos.y))
         ctx.strokeStyle=this.color
         ctx.stroke()
+    }
+    dependsOn(particle){
+        return this.a==particle || this.b==particle
     }
 
 }

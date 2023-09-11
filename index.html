@@ -32,23 +32,14 @@
         </aside>
         <aside id="toolbox">
             <section id="tools">
-                <button onclick="setTool('create')" title="Expand menu">
-                    <img src="./art/icons/draw.png" alt="expand menu">
+                <button onclick="setTool('create','Particle')" title="Create">
+                    <img src="./art/icons/draw.png" alt="create">
                 </button>
-                <button onclick="setTool('rect')" title="Rectangle tool">
-                    <img src="./art/icons/rect.png" alt="rectangle">
+                <button onclick="setTool('cut')" title="Cut">
+                    <img src="./art/icons/cut.png" alt="cut">
                 </button>
-                <button onclick="setTool('text')" title="Text tool">
-                    <img src="./art/icons/text.png" alt="text">
-                </button>
-                <button onclick="setTool('ruler')" title="Ruler">
-                    <img src="./art/icons/ruler.png" alt="ruler">
-                </button>
-                <button onclick="setTool('compass')" title="Compass">
-                    <img src="./art/icons/compass.png" alt="compass">
-                </button>
-                <button onclick="setTool('zoom')" title="Zoom">
-                    <img src="./art/icons/zoom.png" alt="zoom">
+                <button onclick="setTool('select')" title="Select">
+                    <img src="./art/icons/select.png" alt="rectangle">
                 </button>
                 <button onclick="toggleGrid()" title="Toggle grid">
                     <img src="./art/icons/grid.png" alt="grid">
@@ -58,16 +49,17 @@
                 </button>
             </section>
             <section id="settings">
-                <h3 id="settings-title">Toolbox</h3>
                 <button onclick="toggleSettingsPane(false)" title="Hide menu">
                     <img src="./art/icons/cross.png" alt="hide menu">
                 </button>
                 <section name="create">
                     <ul id="objects-list">
-                        <li>Force field</li>
+
+                        <h3 class="underline">Objects</h3>
                         <li>Particle</li>
                         <li>Link</li>
                         <li>Rope</li> <!--Mark as conductive for cable-->
+                        <li>Anchor</li>
                         
                         <!--<li>Pole</li>-->
                         <li>Piston</li>
@@ -77,11 +69,12 @@
                         <li>Lamp</li>
                         <li>Magnet</li>
                         <li>Board</li>
-                        <li>Nail</li>
-                    </ul>
-                </section>
-                <section name="gizmos">
-                    <ul id="gizmos-list">
+
+                        <h3 class="underline">Forces</h3>
+                        <li>Force field</li>
+                        <li>Wind</li>
+
+                        <h3 class="underline">Gizmos</h3>
                         <li>Text</li>
                         <li>Ruler</li>
                         <li>Compass</li>
