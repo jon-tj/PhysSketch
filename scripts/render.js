@@ -7,6 +7,7 @@ const staticObjects=[] // Contains text objects, rulers, etc...
 const forces=[] // Contains force fields
 const links=[]
 var displayGrid=true
+var displayLinks=true
 var tool={} //suppress error on initial render
 
 class Viewport{
@@ -100,8 +101,9 @@ function render(){
     for(var i=0; i<staticObjects.length; i++)
         if(!staticObjects[i].hidden)staticObjects[i].render(viewport)
     
-    for(var i=0; i<links.length; i++)
-        if(!links[i].hidden)links[i].render(viewport)
+    if(displayLinks)
+        for(var i=0; i<links.length; i++)
+            if(!links[i].hidden)links[i].render(viewport)
 
     if(tool.tempObj!=null && mouse.location.x>0 && tool.tempObj.currPos){
         ctx.beginPath()
