@@ -120,3 +120,11 @@ section#env-settings{
 input[type="checkbox"]:not(:checked){
     background-color: var(--editor-bg);
 }
+canvas{
+    user-select: none;
+}
+
+.icon{
+    height:1em;
+    margin-right: 0.5em;
+}

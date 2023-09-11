@@ -18,8 +18,9 @@ function generateObjectsList(){
     // Might want to generate items dynamically (?)
     // Set the corresponding click events
     var objs=navbar.objectsList.children
-    for(var i=0;i<objs.length;i++)
-        objs[i].addEventListener('click',(e)=>setTool('create',e.target.innerText))
+    for(var i=0;i<objs.length;i++){
+        objs[i].addEventListener('click',(e)=>setTool('create',e.target.innerText.trim()))
+    }
 }
 generateObjectsList()
 
