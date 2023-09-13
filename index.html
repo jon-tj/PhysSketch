@@ -90,6 +90,10 @@
             <label for="enableGravity">Hide links</label>
             <input type="checkbox" id="enableGravity" onchange="displayLinks=!this.checked;render()">
         </section>
+        <section id="text-editor-container">
+            <textarea id="text-editor" spellcheck="false"></textarea>
+            <button onclick="tool.tempObj=null; textEditorContainer.style.display='none'">Exit</button>
+        </section>
     </section>
 </body>
 <!-- Helpers -->

@@ -128,3 +128,30 @@ canvas{
     height:1em;
     margin-right: 0.5em;
 }
+#text-editor-container{
+    position: absolute;
+    bottom:4em;
+    left:50%;
+    transform: translate(-50%,0);
+    width:40em;
+    max-width: 80%;
+    height:10em;
+    background-color: var(--navbar-bg);
+    border-radius: 1em;
+    overflow: hidden;
+    display: none;
+}
+#text-editor{
+    position: absolute;
+    top:0; left:0; right:0; bottom:3em;
+    border-radius: 1em;
+    resize: none;
+    outline: none;
+    padding:1em;
+}
+#text-editor-container>button{
+    position: absolute;
+    bottom: 4px; right:1em;
+    width:5em;
+    border-radius: 1.5em;
+}

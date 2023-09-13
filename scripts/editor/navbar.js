@@ -43,7 +43,12 @@ navbar.title.addEventListener("keydown",()=>{
 function setTool(type,item=null) {
     tool.type = type
     if(item) tool.item = item
-    if(type=="create") toggleSettingsPane(true)
+    if(type=="create"){
+        toggleSettingsPane(true)
+        if(tool.item=="Text")
+            canvas.style.cursor="text" // Just a touch of quality
+        else canvas.style.cursor="default"
+    }else canvas.style.cursor="default"
 }
 
 function toggleSettingsPane(display=null){

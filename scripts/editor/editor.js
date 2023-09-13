@@ -160,10 +160,6 @@ canvas.addEventListener('mousedown',(e)=>{
                     var p=new Piston(mouse.worldLocation.x,mouse.worldLocation.y,10,1)
                     world.push(p)
                     break
-            case 'Text':
-                var t=new TextGizmo(mouse.worldLocation.x,mouse.worldLocation.y,"Text")
-                staticObjects.push(t)
-                break
             case 'Ruler':
                 var t=new RulerGizmo(mouse.worldLocation.x,mouse.worldLocation.y)
                 staticObjects.push(t)
@@ -199,7 +195,27 @@ canvas.addEventListener('mouseup',(e)=>{
             var link=new Link(tool.tempObj,tool.hoverObj,Vector.diff(tool.tempObj.currPos,tool.hoverObj.currPos).magnitude)
             links.push(link)
             break
+            
+        case 'Text': // Needs to be in mouseup to not overwrite the focus set on the text editor!
+            if(tool.hoverObj==null || tool.hoverObj.text==null){
+                var t=new TextGizmo(mouse.worldLocation.x,mouse.worldLocation.y,"Text")
+                staticObjects.push(t)
+                tool.tempObj=t
+            }else{
+                if(tool.hoverObj.text!=null){
+                    tool.tempObj=tool.hoverObj
+                }
+            }
+            showTextEditor(tool.tempObj.text,(text)=>{
+                if(tool.tempObj!=null){
+                    tool.tempObj.text=text
+                    tool.tempObj.calculateWidth()
+                    render()
+                }
+            })
+            break
     }
+    if(tool.item!="Text")
     tool.tempObj=null
     render()
 })
@@ -225,4 +241,14 @@ function editorCut(){
             render()
         }
     }
+}
+
+textEditorElement = document.querySelector('#text-editor')
+textEditorContainer = document.querySelector('#text-editor-container')
+function showTextEditor(text, onchange){
+    textEditorElement.value = text
+    textEditorElement.setSelectionRange(0, text.length)
+    textEditorContainer.style.display = 'block'
+    textEditorElement.onchange = ()=>{onchange(textEditorElement.value)}
+    textEditorElement.focus()
 }
