@@ -75,7 +75,7 @@ section#tools{
     display: block;
     background-color: var(--navbar-bg);
 }
-#tools>button:last-child{
+#tools>button:nth-last-child(2){
     margin-top: 2em;
 }
 .underline{

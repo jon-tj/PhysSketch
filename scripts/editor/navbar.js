@@ -84,3 +84,10 @@ function toggleGrid(){
     displayGrid = !displayGrid
     render()
 }
+function clearAll(){
+    world.length=0
+    links.length=0
+    staticObjects.length=0
+    forces.length=0
+    render()
+}
