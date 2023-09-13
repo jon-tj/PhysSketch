@@ -77,6 +77,39 @@ class ForceField{
     }
 }
 
+class Pole{
+    /*
+        Similar to link, except collides with other objects.
+    */
+
+    constructor(a,b,length){
+        this.a=a
+        this.b=b
+        this.length=length
+        this.color = 'white'
+    }
+    apply(){
+        var axis=Vector.diff(this.a.currPos,this.b.currPos)
+        var dist=axis.magnitude
+        var halves = this.a.kinematic || this.b.kinematic? 1:0.5
+        axis.scale(halves*(this.length-dist)/(dist))
+        if(!this.a.kinematic)
+            this.a.currPos=Vector.sum(this.a.currPos,axis)
+        if(!this.b.kinematic)
+            this.b.currPos=Vector.diff(this.b.currPos,axis)
+    }
+    render(view){
+        ctx.beginPath()
+        ctx.moveTo(view.transformX(this.a.currPos.x),view.transformY(this.a.currPos.y))
+        ctx.lineTo(view.transformX(this.b.currPos.x),view.transformY(this.b.currPos.y))
+        ctx.strokeStyle=this.color
+        ctx.stroke()
+    }
+    dependsOn(particle){
+        return this.a==particle || this.b==particle
+    }
+}
+
 class Link{
     /*
         Represents an axis between two particles that can be rigid or springy.
@@ -115,6 +148,28 @@ class Link{
         return this.a==particle || this.b==particle
     }
 
+}
+class Spring extends Link {
+    constructor(a,b,length){
+        super(a,b,length,0.005)
+        this.color="#2f2"
+    }
+    render(view){
+        ctx.beginPath()
+        var pos = this.a.currPos.clone()
+        var steps=30
+        var incPos = Vector.diff(this.b.currPos, this.a.currPos).scale(1/(steps+1))
+        var norm = incPos.normal().scale(view.dy)
+        var incI=2*Math.PI/(steps+1)
+        ctx.moveTo(view.transformX(pos.x),view.transformY(pos.y))
+        for(var i=incI;i<=2*Math.PI; i+=incI){
+            pos=Vector.sum(pos,incPos)
+            var y=Math.sin(i*2.5)*0.001
+            ctx.lineTo(view.transformX(pos.x+norm.x*y),view.transformY(pos.y+norm.y*y))
+        }
+        ctx.strokeStyle=this.color
+        ctx.stroke()
+    }
 }
 
 class Piston extends VerletObject {

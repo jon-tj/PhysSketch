@@ -39,6 +39,9 @@ class Vector{
         var c=Math.cos(a), s=Math.sin(a)
         return new Vector(this.x*c+this.y*s,this.y*c-this.x*s)
     }
+    clone(){
+        return new Vector(this.x,this.y)
+    }
 }
 
 const Space = {

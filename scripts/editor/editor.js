@@ -141,6 +141,7 @@ canvas.addEventListener('mousedown',(e)=>{
                     tool.hoverObjType='forces'
                     tool.hoverObj=f
                     break
+                case 'Spring':
                 case 'Link':
                 case 'Rope':
                     if(tool.hoverObj==null){
@@ -196,6 +197,14 @@ canvas.addEventListener('mouseup',(e)=>{
             links.push(link)
             break
             
+        case 'Spring':
+            if(tool.hoverObj==null){
+                tool.hoverObj=new Particle(mouse.worldLocation.x,mouse.worldLocation.y,tool.createRadius)
+                world.push(tool.hoverObj)
+            }
+            var link=new Spring(tool.tempObj,tool.hoverObj,Vector.diff(tool.tempObj.currPos,tool.hoverObj.currPos).magnitude)
+            links.push(link)
+            break
         case 'Text': // Needs to be in mouseup to not overwrite the focus set on the text editor!
             if(tool.hoverObj==null || tool.hoverObj.text==null){
                 var t=new TextGizmo(mouse.worldLocation.x,mouse.worldLocation.y,"Text")
