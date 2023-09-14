@@ -161,11 +161,15 @@ canvas.addEventListener('mousedown',(e)=>{
                     var p=new Piston(mouse.worldLocation.x,mouse.worldLocation.y,10,1)
                     world.push(p)
                     break
-            case 'Ruler':
-                var t=new RulerGizmo(mouse.worldLocation.x,mouse.worldLocation.y)
-                staticObjects.push(t)
-                tool.tempObj=t
-                break
+                case 'Ruler':
+                    var t=new RulerGizmo(mouse.worldLocation.x,mouse.worldLocation.y)
+                    staticObjects.push(t)
+                    tool.tempObj=t
+                    break
+                case 'Generator':
+                    var p=new Generator(mouse.worldLocation.x,mouse.worldLocation.y,tool.createRadius)
+                    world.push(p)
+                    break
             }
             break
         case 'cut':

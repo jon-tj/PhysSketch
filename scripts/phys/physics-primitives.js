@@ -180,7 +180,7 @@ class Piston extends VerletObject {
         this.extendedState=0 //goes from 0 to 1
         this.extended=false
         this.angle=Math.PI/4
-        this.powerInlet=new Vector(0,-0.3) // "virtual particle"
+        this.powerInlet=new Vector(0,-0.3)
     }
     render(view){
         var xT=view.transformX(this.currPos.x)
@@ -228,6 +228,86 @@ class Piston extends VerletObject {
         }
     }
     extend
+}
+
+class Generator extends VerletObject{
+    constructor(x,y,radius=0.1,density=0.5,color="white"){
+        super(x,y,density*Math.PI*radius*radius,true)
+        this.density = density
+        this.radius=radius
+        this.color=color
+        this.time=0
+        this.interval=0.5
+        this.enabled=true
+        this.powerInlet=new Vector(0,-0.2)
+        this.weakCollision=true
+        this.velocity=10
+        this.angle=Math.PI/4
+        this.spread=Math.PI/3
+    }
+    step(dt){
+        super.step(dt)
+        if(!this.enabled) return
+        this.time+=dt
+        if(this.time>this.interval){
+            this.time=0
+            var fwd=this.forward
+            var p=new Particle(this.currPos.x+fwd.x*this.radius*2,this.currPos.y+fwd.y*this.radius*2,this.radius,this.density)
+            p.currPos=Vector.sum(p.currPos,fwd.scale(this.velocity*dt))
+            p.color=this.color
+            world.push(p)
+        }
+    }
+    get forward(){
+        return new Vector(Math.sin(this.angle),Math.cos(this.angle));
+    }
+    render(view){
+        var xT=view.transformX(this.currPos.x)
+        var yT=view.transformY(this.currPos.y)
+
+        // center
+        ctx.beginPath();
+        var circleRadius=tool.hoverObj==this&&tool.hoverObjType!="action"?7:5
+        ctx.arc(xT, yT, circleRadius, 0, 2 * Math.PI);
+        ctx.closePath();
+        ctx.fillStyle = this.color;
+        ctx.fill()
+
+        var target=Vector.sum(this.currPos,this.forward.scale(this.velocity*0.1))
+        
+        var xTarget=view.transformX(target.x)
+        var yTarget=view.transformY(target.y)
+        ctx.moveTo(xT,yT)
+        ctx.lineTo(xTarget,yTarget)
+        ctx.strokeStyle = this.color;
+        ctx.stroke()
+        ctx.beginPath();
+        circleRadius=this.spread*view.dy*0.3
+        ctx.arc(xTarget, yTarget, circleRadius, 0, 2 * Math.PI);
+        ctx.closePath();
+        ctx.stroke()
+        
+        // power inlet
+        ctx.save();
+        ctx.translate(xT, yT);
+        ctx.rotate(this.angle);
+        this.powerInlet.y=-this.powerInlet.y
+        var pT=this.powerInlet.scaled(view.dy)
+        this.powerInlet.y=-this.powerInlet.y
+        ctx.translate(pT.x, pT.y);
+        ctx.beginPath();
+        var circleRadius=tool.hoverObj==this&&tool.hoverObjType=="action"?7:5
+        ctx.arc(0, 0, circleRadius, 0, 2 * Math.PI);
+        ctx.closePath();
+        ctx.strokeStyle = "#ff2";
+        ctx.stroke()
+        ctx.restore()
+    }
+    activate(){
+        this.enabled=!this.enabled
+    }
+
+
 }
 
 class Softbody extends VerletObject{

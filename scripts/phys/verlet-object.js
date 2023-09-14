@@ -38,7 +38,7 @@ class VerletObject{
         this.acc.y+=a.y
     }
 
-    /* Some densities (listed in kg/m^3):
+    /* Some densities (in kg/m^3):
         Water: ~ 1000 kg/m^3
         Air: 1.293 kg/m^3
     */

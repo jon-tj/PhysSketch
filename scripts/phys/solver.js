@@ -46,8 +46,10 @@ setInterval(()=>{
                     var thresh=world[i].radius+world[j].radius
                     if(dist<thresh){
                         diff.scale(thresh-dist)
-                        world[i].currPos=Vector.sum(world[i].currPos,diff)
-                        world[j].currPos=Vector.diff(world[j].currPos,diff)
+                        if(!world[j].weakCollision)
+                            world[i].currPos=Vector.sum(world[i].currPos,diff)
+                        if(!world[i].weakCollision)
+                            world[j].currPos=Vector.diff(world[j].currPos,diff)
                     }
                 }
                 switch(environment.systemClosure){
